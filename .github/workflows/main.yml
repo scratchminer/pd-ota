@@ -1,5 +1,5 @@
 name: patch new FW version
-on: 
+on:
   schedule:
     - cron: '0 12 * * *'
 
@@ -27,7 +27,7 @@ jobs:
   fw-patch:
     runs-on: ubuntu-latest
     needs: version-check
-    permissions: 
+    permissions:
       contents: write
     if: needs.version-check.outputs.status != 'No content' && needs.version-check.outputs.status != 'Error'
     steps:
@@ -42,7 +42,7 @@ jobs:
       - name: Download and Patch Firmware
         run: 'python3 pdpatcher.py -t ${{secrets.PD_ACCESS_TOKEN}} -p ${{secrets.PD_PASSWORD}} -o static/ota_payload'
       - name: Package Firmware
-        run: 'zip -r static/ota_payload.bin static/ota_payload'
+        run: '(cd static/ota_payload && zip -r ../ota_payload.bin .)'
       - name: Remove Old JSON Response
         run: 'rm -f static/update.json'
       - name: Remove ota_payload
