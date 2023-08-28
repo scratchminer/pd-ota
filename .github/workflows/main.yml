@@ -2,7 +2,8 @@ name: patch new FW version
 on:
   schedule:
     - cron: '0 12 * * *'
-
+  workflow_dispatch:
+    
 jobs:
   version-check:
     runs-on: ubuntu-latest
