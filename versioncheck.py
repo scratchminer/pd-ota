@@ -14,4 +14,4 @@ if r.status_code == 204:
 elif r.status_code == 200:
 	print(r.json()["version"])
 else:
-	exit(-1)
+	print("Error")
