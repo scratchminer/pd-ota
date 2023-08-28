@@ -12,9 +12,9 @@ if r.status_code != 200:
 
 soup = BeautifulSoup(r.text, "html.parser")
 for child in soup.find_all(class_="sect1"):
-	release = child.contents[0]["id"][1:].replace("_", ".")
-	if release == argv[1]:
-		print(child.contents[1])
+	release = [s for s in child.contents if s != "\n"]
+	if release[0].string == argv[1]:
+		print(release[1])
 		exit(0)
 
 print(f"Version {argv[1]} not found")
