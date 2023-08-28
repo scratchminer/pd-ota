@@ -78,7 +78,7 @@ if __name__ == "__main__":
 		boot.read(4)
 		aes = AESGCM(key)
 		decrypted_file = aes.decrypt(boot.read(12), boot.read(), None)
-	with open(join(args.out_file, "boot"), "wb") as boot:
+	with open(join(args.out_dir, "boot"), "wb") as boot:
 		boot.write(decrypted_file)
 	
 	dec_header = None
@@ -89,7 +89,7 @@ if __name__ == "__main__":
 		decrypted_file = aes.decrypt(pdfw.read(12), pdfw.read(), None)
 		decrypted = decrypted_file[32:]
 		dec_header = decrypted_file[:32]
-	with open(join(args.out_file, "pdfw"), "wb") as pdfw:
+	with open(join(args.out_dir, "pdfw"), "wb") as pdfw:
 		if not args.no_patch:
 			print(f"Patching {j['version']}...")
 			# change the function telling whether Lua has system privilege
