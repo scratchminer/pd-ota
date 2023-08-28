@@ -47,8 +47,12 @@ jobs:
         run: 'python3 genresp.py ${{needs.version-check.outputs.status}} > static/update.json'
       - name: Store New Version
         run: 'echo ${{needs.version-check.outputs.status}} > static/version.txt'
+      - name: Scrape Changelog
+        run: 'python3 getchangelog.py ${{needs.version-check.outputs.status}} > description.html'
       - name: Publish Release
-        uses: fnkr/github-action-ghr@v1.3
-        env:
-          GHR_PATH: static/
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        uses: ncipollo/release-action@v1.13.0
+        with:
+          artifacts: static/*
+          makeLatest: true
+          tag: ${{needs.version-check.outputs.status}}
+          bodyFile: description.html
