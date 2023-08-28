@@ -1,7 +1,6 @@
 
 from hashlib import md5
 from json import dumps
-from os import env
 
 content = None
 with open("static/ota_payload.bin", "rb") as f:
