@@ -21,6 +21,7 @@ jobs:
         uses: Itsblue/download-release-assets-action@v4
         with:
           file: 'version.txt'
+          token: ${{secrets.GITHUB_TOKEN}}
       - name: Check for New Version
         id: run-step
         run: 'echo status=$(python3 versioncheck.py ${{secrets.PD_ACCESS_TOKEN}} $(cat version.txt)) >> "$GITHUB_OUTPUT"'
