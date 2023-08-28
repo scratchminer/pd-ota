@@ -16,6 +16,7 @@ jobs:
           python-version: '3.10'
           check-latest: true
           cache: 'pip'
+      - run: pip install -r requirements.txt
       - name: Check for New Version
         id: run-step
         run: 'echo status=$(python3 versioncheck.py ${{secrets.PD_ACCESS_TOKEN}}) >> "$GITHUB_OUTPUT"'
@@ -30,6 +31,7 @@ jobs:
           python-version: '3.10'
           check-latest: true
           cache: 'pip'
+      - run: pip install -r requirements.txt
       - name: Download and Patch Firmware
         env:
           VERSION: ${{needs.version-check.outputs.status}}
