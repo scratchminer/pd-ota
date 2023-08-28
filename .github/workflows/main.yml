@@ -43,7 +43,9 @@ jobs:
       - name: Package Firmware
         run: 'zip -r static/ota_payload.bin static/ota_payload'
       - name: Remove Old JSON Response
-        run: 'rm -f static/update.json static/ota_payload'
+        run: 'rm -f static/update.json'
+      - name: Remove ota_payload
+        run: 'rm -rf static/ota_payload'
       - name: Create JSON Response
         run: 'python3 genresp.py ${{needs.version-check.outputs.status}} > static/update.json'
       - name: Store New Version
