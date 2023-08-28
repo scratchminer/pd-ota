@@ -9,7 +9,7 @@ with open("static/ota_payload.bin", "rb") as f:
 
 print(dumps({
 	"md5": md5(content).hexdigest(),
-	"url": "https://github.com/scratchminer/pd-ota/releases/latest/download/ota_payload.bin",
+	"url": "https://github.com/scratchminer/pd-ota/releases/download/" + argv[1] + "/ota_payload.bin",
  	"version": argv[1],
 	"notes": "",
 	"decryption_key": None
