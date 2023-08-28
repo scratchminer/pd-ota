@@ -28,6 +28,8 @@ jobs:
   fw-patch:
     runs-on: ubuntu-latest
     needs: version-check
+    permissions: 
+      contents: write
     if: needs.version-check.outputs.status != 'No content' && needs.version-check.outputs.status != 'Error'
     steps:
       - uses: actions/checkout@v3
