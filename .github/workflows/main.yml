@@ -32,6 +32,7 @@ jobs:
           check-latest: true
           cache: 'pip'
       - run: pip install -r requirements.txt
+      - run: mkdir -p static/ota_payload
       - name: Download and Patch Firmware
         env:
           VERSION: ${{needs.version-check.outputs.status}}
