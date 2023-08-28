@@ -17,5 +17,5 @@ for child in soup.find_all(class_="sect1"):
 		print(child.contents[1])
 		exit(0)
 
-print(f"Version {argv[1] not found}")
+print(f"Version {argv[1]} not found")
 exit(1)
