@@ -34,15 +34,13 @@ jobs:
       - run: pip install -r requirements.txt
       - run: mkdir -p static/ota_payload
       - name: Download and Patch Firmware
-        env:
-          VERSION: ${{needs.version-check.outputs.status}}
         run: 'python3 pdpatcher.py -t ${{secrets.PD_ACCESS_TOKEN}} -p ${{secrets.PD_PASSWORD}} -o static/ota_payload'
       - name: Package Firmware
         run: 'zip -r static/ota_payload.bin static/ota_payload'
       - name: Remove Old JSON Response
         run: 'rm -f static/index.html'
       - name: Create JSON Response
-        run: 'python3 genresp.py > static/index.html'
+        run: 'python3 genresp.py ${{needs.version-check.outputs.status}} > static/index.html'
       - name: Setup GitHub Pages
         uses: actions/configure-pages@v3
       - name: Upload GitHub Pages artifact
