@@ -7,6 +7,7 @@ from argparse import ArgumentParser
 from base64 import b64decode
 from hashlib import md5
 from os import mkdir
+from os.path import join
 from shutil import rmtree
 from sys import argv, exit
 from zipfile import ZipFile
@@ -23,10 +24,13 @@ if __name__ == "__main__":
 	parser.add_argument("-t", help="access token for a registered device", dest="token", required=True)
 	parser.add_argument("-p", help="unlock key, sometimes called the password, for a registered device", dest="pw", metavar="PASSWORD", required=True)
 	parser.add_argument("--no-patch", "-n", action="store_const", const=True, default=False, help="don't patch the firmware at all, just dump it", dest="no_patch")
-	parser.add_argument("-o", default="pdfw", help="output file", dest="out_file")
+	parser.add_argument("-o", default="ota_payload", help="output directory", dest="out_dir")
 	args = parser.parse_args()
 	
 	try: mkdir(".pdpatcher")
+	except FileExistsError: pass
+	
+	try: mkdir(args.out_dir)
 	except FileExistsError: pass
 	
 	print("Requesting firmware from Panic servers...")
@@ -65,8 +69,17 @@ if __name__ == "__main__":
 	with ZipFile(f".pdpatcher/ota_payload.bin", "r") as bundle:
 		pdx_name = bundle.namelist()[0].split("/", 1)[0]
 		bundle.extractall(path=".pdpatcher")
+		bundle.extractall(path=args.out_dir)
 	
 	print(f"Decrypting {j['version']}...")
+
+	decrypted_file = None
+	with open(f".pdpatcher/boot", "rb") as boot:
+		boot.read(4)
+		aes = AESGCM(key)
+		decrypted_file = aes.decrypt(boot.read(12), boot.read(), None)
+	with open(join(args.out_file, "boot"), "wb") as boot:
+		boot.write(decrypted_file)
 	
 	dec_header = None
 	decrypted = None
@@ -76,7 +89,7 @@ if __name__ == "__main__":
 		decrypted_file = aes.decrypt(pdfw.read(12), pdfw.read(), None)
 		decrypted = decrypted_file[32:]
 		dec_header = decrypted_file[:32]
-	with open(args.out_file, "wb") as pdfw:
+	with open(join(args.out_file, "pdfw"), "wb") as pdfw:
 		if not args.no_patch:
 			print(f"Patching {j['version']}...")
 			# change the function telling whether Lua has system privilege
