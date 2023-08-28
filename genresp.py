@@ -1,6 +1,6 @@
-
 from hashlib import md5
 from json import dumps
+from os import environ
 
 content = None
 with open("static/ota_payload.bin", "rb") as f:
@@ -9,7 +9,7 @@ with open("static/ota_payload.bin", "rb") as f:
 print(dumps({
 	"md5": md5(content).hexdigest(),
 	"url": "https://scratchminer.github.io/pd-ota/ota_payload.bin",
- 	"version": env["VERSION"],
+ 	"version": environ["VERSION"],
 	"notes": "",
 	"decryption_key": None
 }))
