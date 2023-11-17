@@ -12,7 +12,7 @@ from shutil import rmtree
 from sys import argv, exit
 from zipfile import ZipFile
 
-FIRMWARE_API = "https://play.date/api/v2/firmware/?current_version=2.0.0"
+FIRMWARE_API = "https://play.date/api/v2/firmware/?current_version=2.1.0"
 
 def quit():
 	try: rmtree(".pdpatcher", ignore_errors=True)
