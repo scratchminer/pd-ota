@@ -72,7 +72,7 @@ if __name__ == "__main__":
 	j2 = r2.json()["artifacts"][0]
 	
 	print(f"Downloading {j['version']} (h7d1)...")
-	s2 = get(j["url"], stream=True)
+	s2 = get(j2["url"], stream=True)
 	
 	with open(f".pdpatcher/Playdate-h7d1.pdfw", "wb") as f:
 		for part in s2.iter_content(512):
@@ -92,13 +92,11 @@ if __name__ == "__main__":
 	
 	print(f"Extracting {j['version']} (dvt1)...")
 	with ZipFile(f".pdpatcher/Playdate-dvt1.pdfw", "r") as bundle:
-		pdx_name = bundle.namelist()[0].split("/", 1)[0]
 		bundle.extractall(path=".pdpatcher/dvt1")
 		bundle.extractall(path=f"{args.out_dir}/dvt1")
 
 	print(f"Extracting {j['version']} (h7d1)...")
 	with ZipFile(f".pdpatcher/Playdate-h7d1.pdfw", "r") as bundle:
-		pdx_name = bundle.namelist()[0].split("/", 1)[0]
 		bundle.extractall(path=".pdpatcher/h7d1")
 		bundle.extractall(path=f"{args.out_dir}/h7d1")
 	
