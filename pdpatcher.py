@@ -140,7 +140,7 @@ if __name__ == "__main__":
 				match = m[0]
 				decrypted = decrypted[:idx] + \
 					match + \
-					(0x08010000 + len(decrypted)).to_bytes(4, byteorder="little") + \
+					(0x08010000 if revision == "dvt1" else 0x24010000 + len(decrypted)).to_bytes(4, byteorder="little") + \
 					decrypted[idx + 0x40:] + \
 					b"sydh.date\x00"
 			md5_hash = md5(decrypted).digest()[:8]
