@@ -48,7 +48,7 @@ if __name__ == "__main__":
 	
 	j = r.json()
 
-	with open("stock_md5.txt", "w") as f:
+	with open(f"{args.out_dir}/md5.txt", "w") as f:
 		f.write(j["md5"])
 	
 	print(f"Downloading {j['version']} (dvt1)...")
