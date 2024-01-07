@@ -1,15 +1,14 @@
-from hashlib import md5
 from json import dumps
-from os import environ
 from sys import argv
 
-content = None
-with open("static/ota_payload.bin", "rb") as f:
-	content = f.read()
+md5 = None
+with open("static/ota_payload/md5.txt", "r") as f:
+	md5 = f.read(32)
 
 print(dumps({
-	"md5": md5(content).hexdigest(),
-	"url": f"https://github.com/scratchminer/pd-ota/releases/download/{argv[1]}/ota_payload.bin",
+	"stock_md5": md5,
+	"dvt1": f"https://github.com/scratchminer/pd-ota/releases/download/{argv[1]}/Playdate-dvt1.pdfw",
+	"h7d1": f"https://github.com/scratchminer/pd-ota/releases/download/{argv[1]}/Playdate-h7d1.pdfw",
  	"version": argv[1],
 	"notes": "",
 	"decryption_key": None
