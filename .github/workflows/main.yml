@@ -43,7 +43,7 @@ jobs:
       - name: Download and Patch Firmware
         run: 'python3 pdpatcher.py -k ${{secrets.PD_MFLT_KEY}} -t ${{secrets.PD_ACCESS_TOKEN}} -p ${{secrets.PD_PASSWORD}} -o static/ota_payload'
       - name: Package Firmware
-        run: '(cd static/ota_payload && zip -r ../Playdate-dvt1.pdfw dvt1 && zip -r ../Playdate-h7d1.pdfw h7d1)'
+        run: '(cd static/ota_payload && zip -r ../Playdate-dvt1.pdfw dvt1/* && zip -r ../Playdate-h7d1.pdfw h7d1/*)'
       - name: Remove Old JSON Response
         run: 'rm -f static/update.json'
       - name: Create JSON Response
