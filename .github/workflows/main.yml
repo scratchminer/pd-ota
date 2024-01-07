@@ -46,10 +46,10 @@ jobs:
         run: '(cd static/ota_payload && zip -r ../Playdate-dvt1.pdfw dvt1 && zip -r ../Playdate-h7d1.pdfw h7d1)'
       - name: Remove Old JSON Response
         run: 'rm -f static/update.json'
-      - name: Remove ota_payload
-        run: 'rm -rf static/ota_payload'
       - name: Create JSON Response
         run: 'python3 genresp.py ${{needs.version-check.outputs.status}} > static/update.json'
+      - name: Remove ota_payload
+        run: 'rm -rf static/ota_payload'
       - name: Scrape Changelog
         run: 'python3 getchangelog.py ${{needs.version-check.outputs.status}} > description.html'
       - name: Publish Release
