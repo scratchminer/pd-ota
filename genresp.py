@@ -3,9 +3,6 @@ from json import dumps
 from sys import argv
 
 md5 = None
-md5_a = None
-md5_b = None
-
 with open("static/ota_payload/md5.txt", "r") as f:
 	md5 = f.read(32)
 
