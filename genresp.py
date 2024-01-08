@@ -15,8 +15,8 @@ with open("static/Playdate-h7d1.pdfw", "rb") as f:
 
 print(dumps({
 	"stock_md5": md5,
-	"dvt1_md5": md5(content_a).hexdigest(),
-	"h7d1_md5": md5(content_b).hexdigest(),
+	"dvt1_md5": md5(content_a).hexdigest,
+	"h7d1_md5": md5(content_b).hexdigest,
 	"dvt1": f"https://github.com/scratchminer/pd-ota/releases/download/{argv[1]}/Playdate-dvt1.pdfw",
 	"h7d1": f"https://github.com/scratchminer/pd-ota/releases/download/{argv[1]}/Playdate-h7d1.pdfw",
  	"version": argv[1],
